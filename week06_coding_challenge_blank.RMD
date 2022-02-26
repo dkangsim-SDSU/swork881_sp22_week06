@@ -1,0 +1,196 @@
+---
+title: "Week 06 Coding challenge"
+name: [ ]
+output: html_notebook
+---
+
+Coding challenge for this week focuses on `data wrangling` and applying `multilevel modeling`. Please refer to the coding demonstration as a guide. 
+You will be using `county` information from Texas for this assignment. 
+
+>Libraries needed for this demonstration
+
+```{r load libraries}
+library(tidyverse)
+library(tidymodels)
+library(naniar)#replace specific value as NA
+library(lme4) #for MLM; install it first if needed
+library(lattice) #for dotplot; install it first if needed
+library(afex) #for p-value in LME; install it first if needed.
+library(splines)
+library(gam)
+library(mgcv)
+```
+
+
+
+#load data set "LHS_TEXAS.csv"
+```{r include=FALSE}
+# write your code here
+
+```
+
+# How many observations? 
+**answer** 
+>
+
+
+# How many variables? 
+**answer**
+>
+
+
+#we will focus on covid-19 related issues; refer to the codebook. 
+
+
+## create a new varaible called `county_regions` and group counties into 12 regions. Use `texas county regions.xlsx` file for your reference. Please note that these type of information are provided for this week's coding challenge; however, for your final project, you will have to search and apply outside information on your own. 
+
+
+```{r}
+## your code goes here
+
+
+```
+# use `table ()` function to see frequency for each county_regions. Which county_region has the biggest sample? State the name of county_region and its sample size. 
+**answer**
+>>
+
+
+# which county_region(s) has the smallest sample? State the name of county_region and its sample size:
+**answer**
+>>
+
+
+
+#since some county_regions have only 1 participant, we need to find a way to combine some regions into more general regions: 
+
+Combine `Rio Grande`, `West`, `southern` and name it as `southwest_region` (75)
+Combine `Alamo`, `Capital`, `Central` and name it as `capital_region` (121)
+Combine `gulf coast`, `southeast` and name it as `east_region` (89)
+Combine `metroplex`, `upper east`, `northwest`, `high plains` and name it as `north_region` (99)
+
+```{r}
+## your code goes here
+
+```
+
+# use `table()` function to describe the four regions
+**answer**
+>>
+
+
+
+#data wrangling - make sure you reverse codes where needed. 
+# create the following variables: 
+- `covid_awareness` = refer to the codebook pg 18; use mean score
+- `ptsd_mean` = refer to the codebook; use mean score
+- `distress` = refer to the codebook; use sum score
+- remove `5` on 9 items listed for covid negative impact
+- score mean `covid_neg_impact` variable using the 9-items listed, but remove individuals that have more than 50% of the missing responses; 
+- convert the `covid_neg_impact` mean score to a sum score
+
+```{r}
+## your code goes here
+
+
+```
+
+
+#compute mean, SD, and number of missing of the `covid_neg_impact` for the four general regions:
+
+```{r}
+
+```
+
+#describe your result:
+**answer**
+>>
+
+
+#compute mean, SD, and number of missing of the `covid_awareness` for the four general regions:
+
+```{r}
+
+
+```
+
+
+
+#Plot density plot using `covid_neg_impact` by the four general regions:
+
+```{r}
+
+
+```
+
+#describe your observation:
+**answer**
+>>
+
+
+
+# Scale `covid_awareness` and `covid_neg_impact` so they have the same mean and units
+
+```{r}
+
+
+```
+
+
+#Fit linear model and use `ggplot` to plot the predicted line by regions
+
+#DV: covid_neg_impact; IV: covid_awareness
+
+```{r}
+
+```
+
+
+#fit linear model with splines at (-1,0,1) and use `ggplot to plot the predicted line by regions; for your ggplot, use `geom_smooth (method="gam")` or geom_smooth (method="loess")
+
+```{r}
+
+```
+
+
+# Compare the plots and explain how they are different? 
+**answer**
+>>
+
+
+
+
+
+## Now use `lmer` with random intercept; use the four county regions as your group variable;
+#use spline knot points at -1, 0, 1, then plot predicted line by regions; use method="gam" for your geom_smooth() function.
+
+```{r}
+
+
+
+```
+
+#describe your plot: 
+**answer**
+>>
+
+
+
+
+## Now use `lmer` model with random intercept and slope; use the county regions as your group variable and use your IV as slope. Use spline knot points at -1, 0, 1, then plot prediced line by regions; use method="gam" for  your geom_smooth() function.
+
+```{r}
+
+
+```
+
+#describe your plot:
+**asnwer**
+>>
+
+
+
+
+
+
+
+
